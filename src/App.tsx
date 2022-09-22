@@ -1,5 +1,6 @@
 import CardContainer from './Components/CardContainer';
 import Login from './Components/Login';
+import FilterBar from './Components/FilterBar';
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
     <div>
       <div >
         <Login/>
+        <FilterBar/>
         <CardContainer />
       </div>
     </div>
