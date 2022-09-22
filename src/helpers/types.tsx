@@ -1,7 +1,7 @@
 export type Commit = {
     id: string;
     short_id: string;
-    created_at: Date;
+    created_at: string;
     parent_ids: string[];
     title: string;
     message: string;
