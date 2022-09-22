@@ -14,14 +14,12 @@ function CardContainer() {
     }, [])
 
     return (
-        <div style={{ padding: "30px" }}>
-            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} >
-                {commits?.map(c => (
-                    <Grid item xs={2} sm={4} md={4}>
-                        <CommitCard commit={c} />
-                    </Grid>
-                ))}
-            </Grid>
+        <div className='cardContainer'>
+            {commits?.map(c => (
+                <div>
+                    <CommitCard commit={c} />
+                </div>
+            ))}
         </div>
     )
 };
