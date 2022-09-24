@@ -15,5 +15,35 @@ export type Commit = {
     web_url: string;
 }
 
+type Author = {
+    id: number,
+    username: string,
+    name: string,
+    state: string,
+    avatar_url: string,
+    web_url: string
+}
 
+
+// mulig noen av de under som er number burde vaere bigInt ?
+export type Issue = {
+    id: number,
+    iid: number,
+    project_id: number,
+    title: string,
+    description: string, // usikker paa denne
+    state: string,
+    created_at: Date,
+    updated_at: Date,
+    closed_at: string, // usikker paa denne
+    closed_by: string, // usikker paa denne
+    labels: string[], // usikker paa denne
+    milestone: string, // usikker paa denne
+    assignees: string[], // usikker paa denne
+    author: Author, 
+    type: string,
+    assignee: string, // usikker 
+    user_notes_count: number
+    // tar resten hvis det trengs
+}
 

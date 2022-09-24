@@ -1,4 +1,4 @@
-import { Commit } from "./types";
+import { Commit, Issue } from "./types";
 
 
 export async function getCommits() {
@@ -11,8 +11,21 @@ export async function getCommits() {
     if (response.ok) {
         return await response.json() as Commit[];
     } else {
-        console.log('something went wrong')
+        console.log('Something went wrong. Could not fetch Commits.')
     }
 }
 
+export async function getIssues() {
+    const response = await fetch("https://gitlab.stud.idi.ntnu.no/api/v4/projects/17430/issues", {
+        headers:
+        {
+            Authorization: "Bearer glpat-n3y-kCt83mAmv5KK63js"
+        }
+    })
+    if (response.ok) {
+        return await response.json() as Issue[];
+    } else {
+        console.log('Something went wrong. Could not fetch Issues')
+    }
+}
 
