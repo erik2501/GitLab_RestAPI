@@ -1,20 +1,20 @@
 import CardContainer from './Components/CardContainer';
 import Login from './Components/Login';
 import FilterBar from './Components/FilterBar';
-import IssuesContainer from './Components/IssuesContainer';
+import { BrowserRouter } from "react-router-dom";
+import RoutesComponent from './pages/RoutesComponent';
 
 function App() {
 
 
-
-
   return (
-    <div>
-      <div >
-        <Login />
-        <FilterBar />
-        <CardContainer />
-      </div>
+    <div className='App' >
+      <BrowserRouter>
+        <RoutesComponent/>
+      </BrowserRouter>
+      {/* <Login/>
+      <FilterBar/>
+      <CardContainer /> */}
     </div>
   );
 }
