@@ -29,6 +29,8 @@
 .logincontainer {
   background-color: rgb(195, 224, 250);
   overflow: auto;
+  width: 50%;
+  align-items: center;
 }
 
 .loginbtn {

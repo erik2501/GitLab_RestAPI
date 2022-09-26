@@ -1,12 +1,13 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import { Card, CardContent, CardHeader, CardActions, TextField, Button } from '@mui/material';
 
 // Declaring which components the state needs
 type State = {
     gitlink: string
     token: string
-    helper: string,
+    helper: string
     isError: boolean
+    error: string
 }
 
 // Initialising start-state
@@ -14,7 +15,8 @@ const InitialState:State = {
     gitlink: '',
     token: '',
     helper: '',
-    isError: false
+    isError: false,
+    error: ''
 }
 
 type Action = {type: 'setGitlink', payload: string}
@@ -46,7 +48,10 @@ const login = (state: State, action: Action): State => {
             return {
                 ...state,
                 helper: action.payload,
-                isError: true
+                isError: true,
+                error: 'Incorrect link to git-repository or access-token! Try again.',
+                gitlink: '',
+                token: ''
             }
         case ('setIsError'):
             return {
@@ -67,8 +72,8 @@ const Login = () => {
 
     return (
         <form className='logincontainer'>
-            <Card className=''>
-                <CardHeader className='' title="Find Git-repository"/>
+            <Card>
+                <CardHeader title="Find Git-repository"/>
                 <CardContent>
                     <div>
                         <TextField
