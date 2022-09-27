@@ -26,11 +26,8 @@
   border-radius: 5px;
 }
 
-.logincontainer {
-  background-color: rgb(195, 224, 250);
-  overflow: auto;
-  width: 50%;
-  align-items: center;
+.textfield {
+ align-items: center;
 }
 
 .loginbtn {
@@ -69,4 +66,19 @@ h2 {
 h4 {
   color: #4f4f4f;
   margin: 15px;
+}
+
+.parentcontainer {
+  display: flex;
+  justify-content: center;
+}
+
+.logincontainer {
+  border-radius: 5px;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
