@@ -13,7 +13,7 @@ const RootLayout = ({ children = <Outlet /> }: RootLayoutProps) => (
 	<>
         <Header/>
 		<Navbar />
-		<main style={{minHeight: '100vh'}}>{children}</main>
+		<main style={{minHeight: '100vh', minWidth: "100%"}}>{children}</main>
 		<Footer/>
 	</>
 )
