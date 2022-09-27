@@ -1,19 +1,20 @@
-import { Issue } from '../helpers/types';
+import { Issue, User } from '../helpers/types';
 import { getIssues } from '../helpers/fetches';
 import { useEffect, useState } from 'react';
+import IssueCard from './IssueCard';
 
 const IssuesContainer = () => {
-    const [issues, setIssues] = useState<Issue[] | undefined>([])
+    const [issues, setIssues] = useState<Issue[] | undefined>([]);
+    const [users, setUsers] = useState<User[]>([]);
 
     useEffect(() => {
         getIssues().then(data => setIssues(data));
     }, [])
 
-    return(
-        <div style={{backgroundColor: 'green'}}>
-            <h1>Issues</h1>
+    return (
+        <div className='cardContainer'>
             {issues?.map((issue) => (
-                <p>{issue.title}</p>
+                <IssueCard key={issue.id} issue={issue} />
             ))}
         </div>
     )

@@ -24,6 +24,13 @@ type Author = {
     web_url: string
 }
 
+export type User = {
+    id: number;
+    username: string;
+    name: string;
+    state: string;
+}
+
 
 // mulig noen av de under som er number burde vaere bigInt ?
 export type Issue = {
@@ -33,17 +40,18 @@ export type Issue = {
     title: string,
     description: string, // usikker paa denne
     state: string,
-    created_at: Date,
-    updated_at: Date,
+    created_at: string,
+    updated_at: string,
     closed_at: string, // usikker paa denne
-    closed_by: string, // usikker paa denne
+    closed_by: User,// usikker paa denne
     labels: string[], // usikker paa denne
     milestone: string, // usikker paa denne
     assignees: string[], // usikker paa denne
-    author: Author, 
+    author: Author,
     type: string,
     assignee: string, // usikker 
     user_notes_count: number
     // tar resten hvis det trengs
 }
+
 
