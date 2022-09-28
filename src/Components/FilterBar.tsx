@@ -26,12 +26,8 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
     const [openDrawer, setOpenDrawer] = useState<boolean>(false)
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down('sm'));
-    console.log(matches);
-    /*
-    Utgåtte funksjoner, mulig slettes
-    const [dateFilter, setDateFilter] = useState<Commit[] | undefined>([])
-    const [namefilter, setNameFilter] = useState<Commit[] | undefined>([])
-    */
+    //console.log(matches);
+
     useEffect(() => {
         getCommits().then(data => setCommits(data))
         getCommits().then(data => setFilteredCommits(data))
@@ -56,8 +52,8 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
     //filtrerer på navn
     const filterName = () => {
         setFiltered(commits?.filter(x => x.author_name === searchName));
-        console.log(searchName);
-        console.log(filtered);
+        //console.log(searchName);
+        //console.log(filtered);
     }
     
     //clear kun liste
@@ -70,7 +66,7 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
 
         if (startDate != null && endDate != null){
             setFiltered(commits?.filter(a => (dayjs(a.committed_date) > startDate && dayjs(a.committed_date) < endDate)));
-            console.log(filtered)
+            //console.log(filtered)
         }
     }
 
@@ -79,6 +75,7 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
         filterDate();
         setFilteredCommits(filtered); //fungerer men fortsatt på to forsøk
     }
+
     const toggleOpenDrawer = () => setOpenDrawer(!openDrawer)
     const changeFilterName = (e: any) => setSearchName(e.target.value)
     const handleChangeStartDate = (newValue: Dayjs | null) => setStartDate(newValue)
