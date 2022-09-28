@@ -24,8 +24,8 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
     const [endDate, setEndDate] = useState<Dayjs | null>()
     const names = Array.from(new Set(commits?.map(x => x.author_name)))
     const [openDrawer, setOpenDrawer] = useState<boolean>(false)
-    const theme = useTheme();
-    const matches = useMediaQuery(theme.breakpoints.down('sm'));
+    const theme = useTheme()
+    const matches = useMediaQuery(theme.breakpoints.down('sm'))
     //console.log(matches);
 
     useEffect(() => {
@@ -33,6 +33,9 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
         getCommits().then(data => setFilteredCommits(data))
     }, [])
 
+    useEffect(() => {
+        setFilteredCommits(filtered);
+    }, [filtered])
 
     //filtrerer alfabetisk, skal kanskje ikke brukes
     const filterAlpha = () => {
@@ -63,7 +66,6 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
     
     //TODO filtrerer på dato
     const filterDate = () => {
-
         if (startDate != null && endDate != null){
             setFiltered(commits?.filter(a => (dayjs(a.committed_date) > startDate && dayjs(a.committed_date) < endDate)));
             //console.log(filtered)
