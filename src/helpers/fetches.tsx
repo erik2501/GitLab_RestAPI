@@ -1,13 +1,45 @@
+import { useState } from "react";
 import { Commit, Issue } from "./types";
 
+// type infoProp = {
+//     ID?: string | undefined;
+//     token?: string | undefined;
+// }
+
+// export function setInfo(props?: infoProp) {
+
+//     const [groupID, setGroupID] = useState<string>();
+//     const [accessToken, setAccessToken] = useState<string>();
+
+//     if (props?.ID) {
+//         setGroupID(props?.ID)
+//     }
+//     if (props?.token) {
+//         setAccessToken(props.token)
+//     }
+//     return [groupID, accessToken];
+
+
+
+// }
+
+
+
+// https://gitlab.stud.idi.ntnu.no/api/v4/projects/17430
+// glpat-n3y-kCt83mAmv5KK63js
 
 export async function getCommits() {
-    const response = await fetch("https://gitlab.stud.idi.ntnu.no/api/v4/projects/17430/repository/commits", {
+
+    const ID = localStorage.getItem('gitLink');
+    const token = localStorage.getItem('accessToken');
+
+    const response = await fetch('https://gitlab.stud.idi.ntnu.no/api/v4/projects/' + ID + "/repository/commits", {
         headers:
         {
-            Authorization: "Bearer glpat-n3y-kCt83mAmv5KK63js"
+            Authorization: "Bearer " + token
         }
     })
+
     if (response.ok) {
         return await response.json() as Commit[];
     } else {
@@ -16,29 +48,17 @@ export async function getCommits() {
 }
 
 export async function getIssues() {
-    const response = await fetch("https://gitlab.stud.idi.ntnu.no/api/v4/projects/17430/issues", {
+    const ID = localStorage.getItem('gitLink');
+    const token = localStorage.getItem('accessToken');
+
+    const response = await fetch('https://gitlab.stud.idi.ntnu.no/api/v4/projects/' + ID + '/issues', {
         headers:
         {
-            Authorization: "Bearer glpat-n3y-kCt83mAmv5KK63js"
+            Authorization: "Bearer " + token
         }
     })
     if (response.ok) {
         return await response.json() as Issue[];
-    } else {
-        console.log('Something went wrong. Could not fetch Issues')
-    }
-}
-
-
-export async function getUserClosedBy() {
-    const response = await fetch("https://gitlab.stud.idi.ntnu.no/api/v4/projects/17430/issues", {
-        headers:
-        {
-            Authorization: "Bearer glpat-n3y-kCt83mAmv5KK63js"
-        }
-    })
-    if (response.ok) {
-        return await response.json();
     } else {
         console.log('Something went wrong. Could not fetch Issues')
     }
