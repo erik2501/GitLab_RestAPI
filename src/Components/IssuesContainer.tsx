@@ -15,9 +15,9 @@ const IssuesContainer = () => {
     const [filteredIssues, setFilteredIssues] = useState<Issue[] | undefined>([]);
     return (
         <div>
-        <div>
-        <IssueFilterBar filteredIssues={filteredIssues} setFilteredIssues={setFilteredIssues}/>
-        </div>
+            <div className='parentcontainer'>
+                <IssueFilterBar filteredIssues={filteredIssues} setFilteredIssues={setFilteredIssues}/>
+            </div>
         <div className='cardContainer'>
 
             {filteredIssues?.map((issue) => (

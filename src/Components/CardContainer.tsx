@@ -18,7 +18,7 @@ function CardContainer() {
 
     return (
         <div>
-            <div>
+            <div className='parentcontainer'>
                 <FilterBar filteredCommits={filteredCommits} setFilteredCommits={setFilteredCommits} />
             </div>
             <div className='cardContainer'>
