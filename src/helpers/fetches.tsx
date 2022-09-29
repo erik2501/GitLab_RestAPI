@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Commit, Issue } from "./types";
+import { Commit, Issue, Project } from "./types";
 
 // type infoProp = {
 //     ID?: string | undefined;
@@ -28,9 +27,26 @@ import { Commit, Issue } from "./types";
 // https://gitlab.stud.idi.ntnu.no/api/v4/projects/17430
 // glpat-n3y-kCt83mAmv5KK63js
 
+
+export async function getProjectInfo() {
+
+    const ID = localStorage.getItem('projectID');
+    const token = localStorage.getItem('accessToken');
+
+    const response = await fetch('https://gitlab.stud.idi.ntnu.no/api/v4/projects/' + ID, {
+        headers:
+        {
+            Authorization: "Bearer " + token
+        }
+    })
+    if (response.ok) {
+        return await response.json() as Project;
+    }
+}
+
 export async function getCommits() {
 
-    const ID = localStorage.getItem('gitLink');
+    const ID = localStorage.getItem('projectID');
     const token = localStorage.getItem('accessToken');
 
     const response = await fetch('https://gitlab.stud.idi.ntnu.no/api/v4/projects/' + ID + "/repository/commits", {
@@ -48,7 +64,7 @@ export async function getCommits() {
 }
 
 export async function getIssues() {
-    const ID = localStorage.getItem('gitLink');
+    const ID = localStorage.getItem('projectID');
     const token = localStorage.getItem('accessToken');
 
     const response = await fetch('https://gitlab.stud.idi.ntnu.no/api/v4/projects/' + ID + '/issues', {
