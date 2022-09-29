@@ -17,16 +17,19 @@ function CardContainer() {
     const [filteredCommits, setFilteredCommits] = useState<Commit[] | undefined>([])
 
     return (
-        <div className='cardContainer'>
-            <div>
+        <div>
+            <div className='parentcontainer'>
                 <FilterBar filteredCommits={filteredCommits} setFilteredCommits={setFilteredCommits} />
             </div>
-            {filteredCommits?.map(c => (
-                <div>
-                    <CommitCard commit={c} />
-                </div>
-            ))}
+            <div className='cardContainer'>
+                {filteredCommits?.map(c => (
+                    <div>
+                        <CommitCard commit={c} />
+                    </div>
+                ))}
+            </div>
         </div>
+
     )
 };
 
