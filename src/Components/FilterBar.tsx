@@ -26,57 +26,44 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
     const [openDrawer, setOpenDrawer] = useState<boolean>(false)
     const theme = useTheme()
     const matches = useMediaQuery(theme.breakpoints.down('sm'))
-    //console.log(matches);
 
     useEffect(() => {
         getCommits().then(data => setCommits(data))
-        getCommits().then(data => setFilteredCommits(data))
     }, [])
 
     useEffect(() => {
-        setFilteredCommits(filtered);
-    }, [filtered])
+        setFiltered(commits);
+        setFilteredCommits(commits);
+    },[commits])
 
-    //filtrerer alfabetisk, skal kanskje ikke brukes
-    const filterAlpha = () => {
-        if (commits != undefined) {
-            setFiltered(commits?.sort((a, b) => a.author_name.localeCompare(b.author_name)));
-        }
-    }
 
     //klarer alle filtere
     const clearFilters = () => {
-        getCommits().then(data => setFilteredCommits(data))
-        setStartDate(dayjs())
-        setEndDate(dayjs())
-        setSearchName(undefined) //funker ikke, spør stud ass
+        setSearchName(undefined);
+        setStartDate(undefined);
+        setEndDate(undefined);
+        setFilteredCommits(commits);
     }
-    
-    //filtrerer på navn
-    const filterName = () => {
-        setFiltered(commits?.filter(x => x.author_name === searchName));
-        //console.log(searchName);
-        //console.log(filtered);
-    }
-    
-    //clear kun liste
-    const clearList = () => {
-        getCommits().then(data => setFiltered(data))
-    }
-    
-    //TODO filtrerer på dato
-    const filterDate = () => {
-        if (startDate != null && endDate != null){
-            setFiltered(commits?.filter(a => (dayjs(a.committed_date) > startDate && dayjs(a.committed_date) < endDate)));
-            //console.log(filtered)
+
+    //filtrerer på valgte parametere
+    const bothFilters = () => {
+        setFiltered(commits)
+        if (searchName) {
+            setFiltered(prevFiltered => prevFiltered?.filter(x => x.author_name === searchName));
+        }
+        if (startDate != null && endDate != null) {
+            setFiltered(prevFiltered => prevFiltered?.filter(a => (dayjs(a.committed_date) > startDate && dayjs(a.committed_date) < endDate)));
         }
     }
 
+    //render de valgte elementene
     const submitFilter = () => {
-        filterName();
-        filterDate();
-        setFilteredCommits(filtered); //fungerer men fortsatt på to forsøk
+        setFilteredCommits(filtered); 
     }
+
+    useEffect(() => {
+        bothFilters();
+    },[startDate, endDate, searchName])
 
     const toggleOpenDrawer = () => setOpenDrawer(!openDrawer)
     const changeFilterName = (e: any) => setSearchName(e.target.value)
