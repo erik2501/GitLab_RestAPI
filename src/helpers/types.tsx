@@ -7,10 +7,10 @@ export type Commit = {
     message: string;
     author_name: string;
     author_email: string;
-    authored_date: Date;
+    authored_date: string;
     committer_name: string;
     committer_email: string;
-    committed_date: Date;
+    committed_date: string;
     trailers: unknown;
     web_url: string;
 }
