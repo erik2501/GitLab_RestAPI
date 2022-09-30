@@ -31,7 +31,7 @@ const Navbar = () => {
             <button id={'groupmanagerBtn'} className='button-15' onClick={() => updateNav('')}> Group manager</button>
             <button id={'commitsBtn'} className='button-15' onClick={() => updateNav('commits')}> Commits</button>
             <button id={'issuesBtn'} className='button-15' onClick={() => updateNav('issues')}> Issues </button>
-            <button id={'issuesBtn'} className='button-15' onClick={() => updateNav('issues')}> Data </button>
+            <button id={'dataBtn'} className='button-15' onClick={() => updateNav('data')}> Data </button>
         </div>
 /*
         <div style={{ width: '60%', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly'}}>
