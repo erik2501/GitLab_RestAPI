@@ -54,4 +54,9 @@ export type Issue = {
     // tar resten hvis det trengs
 }
 
-
+export type Project = {
+    id: number,
+    description: string,
+    name: string,
+    avatar_url: string //"https://gitlab.stud.idi.ntnu.no/uploads/-/system/project/avatar/17430/pingvin.png"
+}
