@@ -4,19 +4,40 @@ import { LabelRenderProps } from 'react-minimal-pie-chart/types/Label';
 import { getCommits } from '../helpers/fetches';
 import { Commit } from '../helpers/types';
 
-const generateColor = () => {
-    const red = Math.floor(Math.random() * 256);
-    const green = Math.floor(Math.random() * 256);
-    const blue = Math.floor(Math.random() * 256);
-    return `rgb(${red}, ${green}, ${blue})`
-}
+
+var colors = ['#00876c',
+'#559d76',
+'#86b385',
+'#b1c999',
+'#dadfb3',
+'#fff6d2',
+'#f4d7a7',
+'#edb682',
+'#e79266',
+'#e06b56',
+'#d43d51']
+
+export const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: true,
+        text: 'Chart.js Bar Chart',
+      },
+    },
+  };
+
+ 
 
 export const GetChartData = () => {
     
     const [commits, setCommits] = useState<Commit[] | undefined>([])
 
     var authorOccurence: {[name: string]: number } = {}
-
+    var number = 0;
     let data = []
 
     commits?.forEach((commit) => {
@@ -30,31 +51,36 @@ export const GetChartData = () => {
     for (let key in authorOccurence) {
         let value = authorOccurence[key];
         
-        var randomColor = generateColor()
         let insert = {
-            color: randomColor,
+            color: colors[number],
             title: key,
             value: value,
         }
         data.push(insert);
+
+        number = number + 1;
+        if (number == 13){
+            number = 0
+        }
     }
 
     useEffect(() => {
         getCommits().then(data => setCommits(data))
-        console.log(authorOccurence);
+        //console.log(authorOccurence);
     }, [])
-
     return (data)
 }
 
+
 const renderLabel = (labelRenderProps: LabelRenderProps) => {
+    //var xx = labelRenderProps.dataEntry.title + labelRenderProps.dataEntry.value;
     return labelRenderProps.dataEntry.title;
 }
 
 const Chart = () => {
         
     return (
-        <div>
+        <div style={{height:'60%',width:'60%'}}>
             <PieChart
                 data={ GetChartData() }
                 label={renderLabel}
