@@ -3,7 +3,8 @@ import { PieChart } from 'react-minimal-pie-chart';
 import { LabelRenderProps } from 'react-minimal-pie-chart/types/Label';
 import { getCommits } from '../helpers/fetches';
 import { Commit } from '../helpers/types';
-
+import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
+import { useMediaQuery, useTheme } from '@mui/material';
 
 var colors = ['#00876c',
 '#559d76',
@@ -63,7 +64,7 @@ export const GetChartData = () => {
             number = 0
         }
     }
-
+    console.log(data)
     useEffect(() => {
         getCommits().then(data => setCommits(data))
         //console.log(authorOccurence);
@@ -78,16 +79,32 @@ const renderLabel = (labelRenderProps: LabelRenderProps) => {
 }
 
 const Chart = () => {
+    const theme = useTheme()
+    const matches = useMediaQuery(theme.breakpoints.down('sm'))
+
         
     return (
-        <div style={{height:'60%',width:'60%'}}>
+        
+        <div className='chartcontainer'>
+        <div >
             <PieChart
                 data={ GetChartData() }
                 label={renderLabel}
-                labelStyle = {{ fontSize: '4px' }}
+                labelStyle = {{ fontSize: '3px' }}
                 labelPosition = {60}
-            />
+            />             
         </div>
+        <div >
+            <BarChart width={matches ? 350 : 450} height={matches ? 200 : 250} data={GetChartData()}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey='title' />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey='value' fill="#82ca9d" />
+            </BarChart>
+        </div>
+        </div>
+
     )
 }
 

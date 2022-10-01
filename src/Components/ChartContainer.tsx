@@ -4,7 +4,9 @@ const ChartContainer = () => {
 
     return (
         <div className='chartcontainer'>
-            <h3>Piechart showing distribution of commits by group members</h3>
+            <div style={{width:'100%'}}>
+                <h3>Piechart and barchart showing distribution of commits by group members</h3>
+            </div>
             <Chart/>
         </div>
     )
