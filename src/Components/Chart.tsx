@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLogin } from './ProjectContext';
 import { PieChart } from 'react-minimal-pie-chart';
 import { LabelRenderProps } from 'react-minimal-pie-chart/types/Label';
 import { getCommits } from '../helpers/fetches';
@@ -35,6 +36,8 @@ export const options = {
 
 export const GetChartData = () => {
     
+
+    const projectContext = useLogin();
     const [commits, setCommits] = useState<Commit[] | undefined>([])
 
     var authorOccurence: {[name: string]: number } = {}
@@ -65,10 +68,16 @@ export const GetChartData = () => {
         }
     }
     console.log(data)
+
     useEffect(() => {
-        getCommits().then(data => setCommits(data))
+        const projectID = projectContext?.project?.projectID;
+        const token = projectContext?.project?.token;
+        if (projectID && token) {
+            getCommits(projectID,token).then(data => setCommits(data));
+        }
         //console.log(authorOccurence);
-    }, [])
+    }, [projectContext?.project])
+    
     return (data)
 }
 

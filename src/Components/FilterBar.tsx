@@ -1,7 +1,8 @@
-import { Drawer, IconButton, ListItem, ListItemIcon, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useLogin } from './ProjectContext';
 import { Commit } from '../helpers/types';
 import { getCommits } from '../helpers/fetches';
+import { Drawer, IconButton, ListItem, ListItemIcon, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FilterList from '@mui/icons-material/FilterList';
@@ -17,6 +18,7 @@ import { Container } from '@mui/system';
 
 function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : any, setFilteredCommits : any}) {
 
+    const projectContext = useLogin();
     const [commits, setCommits] = useState<Commit[] | undefined>([])
     const [filtered, setFiltered] = useState<Commit[] | undefined>([])
     const [searchName, setSearchName] = useState<String | undefined>()
@@ -28,8 +30,12 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
     const matches = useMediaQuery(theme.breakpoints.down('sm'))
 
     useEffect(() => {
-        getCommits().then(data => setCommits(data))
-    }, [])
+        const projectID = projectContext?.project?.projectID;
+        const token = projectContext?.project?.token;
+        if (projectID && token) {
+            getCommits(projectID,token).then(data => setCommits(data));
+        }
+    }, [projectContext?.project]) 
 
     useEffect(() => {
         setFiltered(commits);

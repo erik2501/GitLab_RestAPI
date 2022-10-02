@@ -60,3 +60,8 @@ export type Project = {
     name: string,
     avatar_url: string //"https://gitlab.stud.idi.ntnu.no/uploads/-/system/project/avatar/17430/pingvin.png"
 }
+
+export type LoginInfo = {
+    projectID: string | null,
+    token: string | null
+}

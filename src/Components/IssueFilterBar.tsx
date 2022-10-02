@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState, useRef } from "react";
+import { useLogin } from '../Components/ProjectContext';
 import { Issue } from '../helpers/types';
 import { getCommits, getIssues } from '../helpers/fetches';
 import { Drawer, IconButton, ListItem, ListItemIcon, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
@@ -14,6 +15,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 function IssueFilterBar({filteredIssues , setFilteredIssues} : {filteredIssues : any, setFilteredIssues : any}){
 
+    const projectContext = useLogin();
     const [issues, setIssues] = useState<Issue[] | undefined>([])
     const [status, setStatus] = useState<string>()
     const names = Array.from(new Set(issues?.map(x => x.author.name)))
@@ -25,11 +27,15 @@ function IssueFilterBar({filteredIssues , setFilteredIssues} : {filteredIssues :
 
 
     useEffect(() => {
-        getIssues().then(data => setIssues(data))
-    }, [])
+        const projectID = projectContext?.project?.projectID;
+        const token = projectContext?.project?.token;
+        if (projectID && token) {
+            getIssues(projectID,token).then(data => setIssues(data));
+        }
+    }, [projectContext?.project])
 
     useEffect(() => {
-        console.log(issues)
+        // console.log(issues)
         setFiltered(issues);
         setFilteredIssues(issues);
     },[issues])
