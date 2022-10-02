@@ -1,3 +1,5 @@
+import { NamedExoticComponent } from "react";
+
 export type Commit = {
     id: string;
     short_id: string;
@@ -54,11 +56,16 @@ export type Issue = {
     // tar resten hvis det trengs
 }
 
+type Namespace = {
+    name: string
+}
+
 export type Project = {
     id: number,
     description: string,
     name: string,
     avatar_url: string //"https://gitlab.stud.idi.ntnu.no/uploads/-/system/project/avatar/17430/pingvin.png"
+    namespace: Namespace
 }
 
 export type LoginInfo = {
