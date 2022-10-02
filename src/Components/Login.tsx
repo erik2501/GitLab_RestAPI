@@ -1,133 +1,68 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardActions, TextField, Button } from '@mui/material';
 import { getProjectInfo } from '../helpers/fetches';
 import { Project } from "../helpers/types";
-
-// // Declaring which components the state needs
-// type State = {
-//     gitlink: string
-//     token: string
-//     helper: string
-//     isError: boolean
-//     error: string
-// }
-
-// // Initialising start-state
-// const InitialState: State = {
-//     gitlink: '',
-//     token: '',
-//     helper: '',
-//     isError: false,
-//     error: ''
-// }
-
-// type Action = { type: 'setGitlink', payload: string }
-//     | { type: 'setToken', payload: string }
-//     | { type: 'gitFound', payload: string }
-//     | { type: 'gitNotFound', payload: string }
-//     | { type: 'setIsError', payload: boolean }
-
-
-// const login = (state: State, action: Action): State => {
-//     switch (action.type) {
-//         case ('setGitlink'):
-//             return {
-//                 ...state,
-//                 gitlink: action.payload
-//             }
-//         case ('setToken'):
-//             return {
-//                 ...state,
-//                 token: action.payload
-//             }
-//         case ('gitFound'):
-//             return {
-//                 ...state,
-//                 helper: action.payload,
-//                 isError: false
-//             }
-//         case ('gitNotFound'):
-//             return {
-//                 ...state,
-//                 helper: action.payload,
-//                 isError: true,
-//                 error: 'Incorrect link to git-repository or access-token! Try again.',
-//                 gitlink: '',
-//                 token: ''
-//             }
-//         case ('setIsError'):
-//             return {
-//                 ...state,
-//                 isError: action.payload
-//             }
-//     }
-// }
+import { useLogin } from './ProjectContext';
 
 
 const Login = () => {
-    //const [state, dispatch] = useReducer(login, InitialState);
-
-    const [projectID, setProjectID] = useState<string | undefined>();
+    
+    const projectContext = useLogin();
+    const [projectID, setProjectID] = useState<string>();
     const [token, setToken] = useState<string>();
-    const [projectInfo, setProjectInfo] = useState<Project | undefined>();
     const [message, setMessage] = useState<string>('');
-    const [loggedIn, setLoggedIn] = useState<boolean>();
+    const [projectData, setProjectData] = useState<Project>();
 
-    const handleFindGit = async () => {
-        if (!projectID || !token){
-            setMessage('You have to fill out both Project ID and Access Token. Please try again.');
-            return;
-        }
-        localStorage.setItem('projectID', projectID);
-        localStorage.setItem('accessToken', token);
-        await getProjectInfo()
-            .then(data => {
-                setProjectInfo(data);
-            })
-            .catch(error => console.log('error'))
-        
-        if (!projectInfo){
-            setMessage('Could not find this gitlab project. Please try again.');
-        }
-    }
+
+    // glpat-n3y-kCt83mAmv5KK63js
 
     useEffect(() => {
-        //getProjectInfo().then(data => setProjectInfo(data)) // med bruk av react query tror jeg ikke jeg trenger denne..
-        const loggedInFromLS = localStorage.getItem('loggedIn');
-        if (loggedInFromLS == 'true') {setLoggedIn(true)}
+        if (projectData?.id !== -1 && projectID && token) {
+            projectContext?.setProject({
+                projectID: projectID,
+                token: token
+            })
+        } else {
+            setMessage('Wrong login info, try again.');
+        }
+    }, [projectData])
+
+    useEffect(() => {
+        const lsProjectID = localStorage.getItem('projectID');
+        const lsToken = localStorage.getItem('token');
+        if (lsProjectID && lsToken){
+            projectContext?.setProject({
+                projectID: lsProjectID,
+                token: lsToken
+            })
+            setProjectID(lsProjectID);
+            setToken(lsToken);
+        }
         setMessage('');
     },[])
-
-    useEffect(() => {
-        if (projectInfo){
-            console.log(projectInfo);
-            setLoggedIn(true);
-            localStorage.setItem('loggedIn', 'true');
+    
+    const logIn = () => {
+        if (projectID && token){
+            getProjectInfo(projectID,token).then(data => setProjectData(data));
+        } else {
+            setMessage('You have to fill in all forms');
         }
-        console.log(projectInfo)
-    }, [projectInfo])
-
-    useEffect(() => {
-        console.log(loggedIn)
-    }, [loggedIn])
-
-    useEffect(() => {
-        setMessage('');
-    },[projectID, token])
-
-    const logOut = () => {
-        localStorage.clear()
-        setProjectID(undefined);
-        setToken(undefined);
-        setProjectInfo(undefined);
-        setMessage('');
-        setLoggedIn(false);
     }
 
-    if (loggedIn) {
+    const logOut = () => {
+        projectContext?.setProject(null);
+        setMessage('');
+        setProjectID('');
+        setToken('');
+        localStorage.setItem('projectID','');
+        localStorage.setItem('token','')
+    }
+    
+
+    if (projectContext?.project) {
         return (
             <div className='parentcontainer'>
-                <h1>You're now viewing {projectInfo?.name}!</h1>
+                <h1>You're now viewing {projectContext.project.projectID}!</h1>
                 <Button onClick={logOut} className='loginBtn' variant='contained'>Log out</Button>
             </div>
         )
@@ -166,7 +101,7 @@ const Login = () => {
                                     style={{ maxWidth: '100%', display: 'flex', justifyContent: 'center' }}
                                     variant='contained'
                                     className='loginbtn'
-                                    onClick={handleFindGit}>
+                                    onClick={logIn}>
                                     Find Git-repository
                                 </Button>
                                 <p>{message}</p>
