@@ -36,7 +36,6 @@ export const options = {
 
 export const GetChartData = () => {
     
-
     const projectContext = useLogin();
     const [commits, setCommits] = useState<Commit[] | undefined>([])
 

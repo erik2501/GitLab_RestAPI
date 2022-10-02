@@ -28,6 +28,11 @@
   padding-top: 2%;
 }
 
+.centering {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 
 /* Buttons from  */

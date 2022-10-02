@@ -25,6 +25,7 @@ const Login = () => {
         } else {
             setMessage('Wrong login info, try again.');
         }
+        console.log(projectData?.namespace.name)
     }, [projectData])
 
     useEffect(() => {
@@ -62,7 +63,7 @@ const Login = () => {
     if (projectContext?.project) {
         return (
             <div className='parentcontainer'>
-                <h1>You're now viewing {projectContext.project.projectID}!</h1>
+                <h1>Welcome to {projectData?.namespace.name} / project: {projectContext.project.projectID}!</h1>
                 <Button onClick={logOut} className='loginBtn' variant='contained'>Log out</Button>
             </div>
         )
