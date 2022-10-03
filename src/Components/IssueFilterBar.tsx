@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState, useRef } from "react";
 import { useLogin } from '../Components/ProjectContext';
 import { Issue } from '../helpers/types';
-import { getCommits, getIssues } from '../helpers/fetches';
+import { getIssues } from '../helpers/fetches';
 import { Drawer, IconButton, ListItem, ListItemIcon, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -17,9 +17,9 @@ function IssueFilterBar({filteredIssues , setFilteredIssues} : {filteredIssues :
 
     const projectContext = useLogin();
     const [issues, setIssues] = useState<Issue[] | undefined>([])
-    const [status, setStatus] = useState<string>('')
+    const [status, setStatus] = useState<string>(() => sessionStorage.getItem('Status')?? '')
     const names = Array.from(new Set(issues?.map(x => x.author.name)))
-    const [searchName, setSearchName] = useState<String | undefined>('')
+    const [searchName, setSearchName] = useState<string>(() => sessionStorage.getItem('SearchName')?? '')
     const [filtered, setFiltered] = useState<Issue[] | undefined>([])
     const theme = useTheme()
     const matches = useMediaQuery(theme.breakpoints.down('sm'))
@@ -35,8 +35,7 @@ function IssueFilterBar({filteredIssues , setFilteredIssues} : {filteredIssues :
     }, [projectContext?.project])
 
     useEffect(() => {
-        // console.log(issues)
-        setFiltered(issues);
+        bothFilters();
         setFilteredIssues(issues);
     },[issues])
 
@@ -59,14 +58,23 @@ function IssueFilterBar({filteredIssues , setFilteredIssues} : {filteredIssues :
         setStatus('');
         setFiltered(issues);
         setFilteredIssues(issues);
+        sessionStorage.setItem('Status', "");
+        sessionStorage.setItem('SearchName', "");
     }
+
 
     useEffect(() => {
         bothFilters();
     },[status, searchName])
 
-    const changeStatus = (e : any) => setStatus(e.target.value);
-    const changeFilterName = (e: any) => setSearchName(e.target.value)
+    const changeStatus = (e : any) => {
+        setStatus(e.target.value);
+        sessionStorage.setItem('Status', e.target.value);
+    }
+    const changeFilterName = (e: any) => {
+        setSearchName(e.target.value);
+        sessionStorage.setItem('SearchName', e.target.value);
+    }
     const toggleOpenDrawer = () => setOpenDrawer(!openDrawer)
 
     return (
