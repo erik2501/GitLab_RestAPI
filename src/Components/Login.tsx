@@ -12,6 +12,7 @@ const Login = () => {
     const [token, setToken] = useState<string>();
     const [message, setMessage] = useState<string>('');
     const [projectData, setProjectData] = useState<Project>();
+    const [teamName, setTeamName] = useState<string | null>()
 
 
     // glpat-n3y-kCt83mAmv5KK63js
@@ -22,6 +23,10 @@ const Login = () => {
                 projectID: projectID,
                 token: token
             })
+            if (projectData){
+                setTeamName(projectData.namespace.name);
+                localStorage.setItem('teamName', projectData.namespace.name);
+            }
         } else {
             setMessage('Wrong login info, try again.');
         }
@@ -31,6 +36,7 @@ const Login = () => {
     useEffect(() => {
         const lsProjectID = localStorage.getItem('projectID');
         const lsToken = localStorage.getItem('token');
+        setTeamName(localStorage.getItem('teamName'));
         if (lsProjectID && lsToken){
             projectContext?.setProject({
                 projectID: lsProjectID,
@@ -56,14 +62,14 @@ const Login = () => {
         setProjectID('');
         setToken('');
         localStorage.setItem('projectID','');
-        localStorage.setItem('token','')
+        localStorage.setItem('token','');
     }
     
 
     if (projectContext?.project) {
         return (
             <div className='parentcontainer'>
-                <h1>Welcome to {projectData?.namespace.name} / project: {projectContext.project.projectID}!</h1>
+                <h1>Welcome to {teamName}!</h1>
                 <Button onClick={logOut} className='loginBtn' variant='contained'>Log out</Button>
             </div>
         )

@@ -23,7 +23,8 @@ export async function getProjectInfo(ID: string, token: string) {
             id: -1,
             description: 'error',
             name: 'error',
-            avatar_url: 'error'
+            avatar_url: 'error',
+            namespace: {name: 'noname'}
         }
         return error as Project;
     }
