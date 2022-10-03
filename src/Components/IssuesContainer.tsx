@@ -1,22 +1,12 @@
-import { Issue, User } from '../helpers/types';
-import { getIssues } from '../helpers/fetches';
-import { useEffect, useState } from 'react';
+import { Issue } from '../helpers/types';
+import { useState } from 'react';
 import IssueCard from './IssueCard';
 import IssueFilterBar from './IssueFilterBar';
 import { useLogin } from '../Components/ProjectContext';
 
 const IssuesContainer = () => {
-    // const [issues, setIssues] = useState<Issue[] | undefined>([]);
-    // const [users, setUsers] = useState<User[]>([]);
-    const projectContext = useLogin();
 
-    // useEffect(() => {
-    //     const projectID = projectContext?.project?.projectID;
-    //     const token = projectContext?.project?.token;
-    //     if (projectID && token) {
-    //         getIssues(projectID,token).then(data => setIssues(data));
-    //     }
-    // }, [])
+    const projectContext = useLogin();
     const [filteredIssues, setFilteredIssues] = useState<Issue[] | undefined>([]);
 
     if (projectContext?.project) {
