@@ -35,6 +35,19 @@ function IssueFilterBar({filteredIssues , setFilteredIssues} : {filteredIssues :
     }, [projectContext?.project])
 
     useEffect(() => {
+        const searchNameSession = sessionStorage.getItem('SearchName')
+        if (searchNameSession != null){
+            setSearchName(searchNameSession)
+        }
+        const statusSession = sessionStorage.getItem('Status')
+        if (statusSession != null){
+            setStatus(statusSession)
+        }
+        //console.log(searchNameSession)
+        //console.log(statusSession)
+    }, [])
+
+    useEffect(() => {
         // console.log(issues)
         setFiltered(issues);
         setFilteredIssues(issues);
@@ -52,6 +65,8 @@ function IssueFilterBar({filteredIssues , setFilteredIssues} : {filteredIssues :
 
     const submitFilter = () => {
         setFilteredIssues(filtered);
+        console.log(searchName)
+        console.log(status)
     }
 
     const clearFilter = () => {
@@ -61,12 +76,22 @@ function IssueFilterBar({filteredIssues , setFilteredIssues} : {filteredIssues :
         setFilteredIssues(issues);
     }
 
+    const [count, setCount] = useState<number>(0);
+
     useEffect(() => {
+        setCount(prevCount => prevCount += 1)
+        console.log("filtering", count)
         bothFilters();
     },[status, searchName])
 
-    const changeStatus = (e : any) => setStatus(e.target.value);
-    const changeFilterName = (e: any) => setSearchName(e.target.value)
+    const changeStatus = (e : any) => {
+        setStatus(e.target.value);
+        sessionStorage.setItem('Status', e.target.value);
+    }
+    const changeFilterName = (e: any) => {
+        setSearchName(e.target.value);
+        sessionStorage.setItem('SearchName', e.target.value);
+    }
     const toggleOpenDrawer = () => setOpenDrawer(!openDrawer)
 
     return (
