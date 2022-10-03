@@ -76,7 +76,7 @@ const Login = () => {
     }
     else {
         return (
-            <div className='parentcontainer'>
+            <div className='parentcontainer' style={{ paddingTop: '40px' }}>
                 <form className='logincontainer'>
                     <Card sx={{ width: '100%' }}>
                         <div className='parentcontainer'>
