@@ -1,9 +1,7 @@
 import CommitCard from '../Components/CommitCard';
-import { getCommits } from '../helpers/fetches';
 import { Commit } from '../helpers/types';
-import { useEffect, useState } from 'react';
 import renderer from 'react-test-renderer'
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 
 const dummyCommit: Commit = {
@@ -29,3 +27,8 @@ it('renders when passed a commit', () => {
     expect(tree).toMatchSnapshot();
 });
 
+
+test('should return date in nice format', () => {
+    const { container } = render(<CommitCard commit={dummyCommit} />);
+    screen.getByText('03/05/2021')
+});

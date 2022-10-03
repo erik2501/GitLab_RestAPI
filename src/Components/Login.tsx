@@ -105,6 +105,7 @@ const Login = () => {
                         <CardActions style={{ display: 'flex', justifyContent: 'center' }}>
                             <div>
                                 <Button
+                                    data-testid='loginBtn'
                                     style={{ maxWidth: '100%', display: 'flex', justifyContent: 'center' }}
                                     variant='contained'
                                     className='loginbtn'
