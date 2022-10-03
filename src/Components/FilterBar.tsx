@@ -105,14 +105,14 @@ function FilterBar({ setFilteredCommits} : {filteredCommits : any, setFilteredCo
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DesktopDatePicker
                                 label="Start Date"
-                                inputFormat="MM/DD/YYYY"
+                                inputFormat="DD/MM/YYYY"
                                 value={startDate}
                                 onChange={handleChangeStartDate}
                                 renderInput={(params) => <TextField {...params} />}
                             />
                             <DesktopDatePicker
                                 label="End Date"
-                                inputFormat="MM/DD/YYYY"
+                                inputFormat="DD/MM/YYYY"
                                 value={endDate}
                                 onChange={handleChangeEndDate}
                                 renderInput={(params) => <TextField {...params} />}
@@ -139,14 +139,14 @@ function FilterBar({ setFilteredCommits} : {filteredCommits : any, setFilteredCo
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DesktopDatePicker
                     label="Start Date"
-                    inputFormat="MM/DD/YYYY"
+                    inputFormat="DD/MM/YYYY"
                     value={startDate}
                     onChange={handleChangeStartDate}
                     renderInput={(params) => <TextField {...params} />}
                 />
                 <DesktopDatePicker
                     label="End Date"
-                    inputFormat="MM/DD/YYYY"
+                    inputFormat="DD/MM/YYYY"
                     value={endDate}
                     onChange={handleChangeEndDate}
                     renderInput={(params) => <TextField {...params} />}

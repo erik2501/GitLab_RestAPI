@@ -16,9 +16,9 @@ function IssueFilterBar({ setFilteredIssues} : {filteredIssues : any, setFiltere
 
     const projectContext = useLogin();
     const [issues, setIssues] = useState<Issue[] | undefined>([])
-    const [status, setStatus] = useState<string>('')
+    const [status, setStatus] = useState<string>(() => sessionStorage.getItem('Status')?? '')
     const names = Array.from(new Set(issues?.map(x => x.author.name)))
-    const [searchName, setSearchName] = useState<String | undefined>('')
+    const [searchName, setSearchName] = useState<string>(() => sessionStorage.getItem('SearchName')?? '')
     const [filtered, setFiltered] = useState<Issue[] | undefined>([])
     const theme = useTheme()
     const matches = useMediaQuery(theme.breakpoints.down('sm'))
@@ -34,8 +34,7 @@ function IssueFilterBar({ setFilteredIssues} : {filteredIssues : any, setFiltere
     }, [projectContext?.project])
 
     useEffect(() => {
-        // console.log(issues)
-        setFiltered(issues);
+        bothFilters();
         setFilteredIssues(issues);
     },[issues])
 
@@ -58,14 +57,23 @@ function IssueFilterBar({ setFilteredIssues} : {filteredIssues : any, setFiltere
         setStatus('');
         setFiltered(issues);
         setFilteredIssues(issues);
+        sessionStorage.setItem('Status', "");
+        sessionStorage.setItem('SearchName', "");
     }
+
 
     useEffect(() => {
         bothFilters();
     },[status, searchName])
 
-    const changeStatus = (e : any) => setStatus(e.target.value);
-    const changeFilterName = (e: any) => setSearchName(e.target.value)
+    const changeStatus = (e : any) => {
+        setStatus(e.target.value);
+        sessionStorage.setItem('Status', e.target.value);
+    }
+    const changeFilterName = (e: any) => {
+        setSearchName(e.target.value);
+        sessionStorage.setItem('SearchName', e.target.value);
+    }
     const toggleOpenDrawer = () => setOpenDrawer(!openDrawer)
 
     return (
