@@ -1,9 +1,8 @@
-import React from "react";
 import { useEffect, useState, useRef } from "react";
 import { useLogin } from '../Components/ProjectContext';
 import { Issue } from '../helpers/types';
 import { getIssues } from '../helpers/fetches';
-import { Drawer, IconButton, ListItem, ListItemIcon, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Drawer, IconButton, Stack, useMediaQuery, useTheme } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
@@ -13,7 +12,7 @@ import { Container } from '@mui/system';
 import FilterList from '@mui/icons-material/FilterList';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
-function IssueFilterBar({filteredIssues , setFilteredIssues} : {filteredIssues : any, setFilteredIssues : any}){
+function IssueFilterBar({ setFilteredIssues} : {filteredIssues : any, setFilteredIssues : any}){
 
     const projectContext = useLogin();
     const [issues, setIssues] = useState<Issue[] | undefined>([])

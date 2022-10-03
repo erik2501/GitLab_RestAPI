@@ -34,26 +34,24 @@ export type User = {
 }
 
 
-// mulig noen av de under som er number burde vaere bigInt ?
 export type Issue = {
     id: number,
     iid: number,
     project_id: number,
     title: string,
-    description: string, // usikker paa denne
+    description: string, 
     state: string,
     created_at: string,
     updated_at: string,
-    closed_at: string, // usikker paa denne
-    closed_by: User,// usikker paa denne
-    labels: string[], // usikker paa denne
-    milestone: string, // usikker paa denne
-    assignees: string[], // usikker paa denne
+    closed_at: string, 
+    closed_by: User,
+    labels: string[], 
+    milestone: string, 
+    assignees: string[], 
     author: Author,
     type: string,
-    assignee: string, // usikker 
+    assignee: string, 
     user_notes_count: number
-    // tar resten hvis det trengs
 }
 
 type Namespace = {

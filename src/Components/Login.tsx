@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardActions, TextField, Button } from '@mui/material';
 import { getProjectInfo } from '../helpers/fetches';
 import { Project } from "../helpers/types";
@@ -13,9 +13,6 @@ const Login = () => {
     const [message, setMessage] = useState<string>('');
     const [projectData, setProjectData] = useState<Project>();
     const [teamName, setTeamName] = useState<string | null>()
-
-
-    // glpat-n3y-kCt83mAmv5KK63js
 
     useEffect(() => {
         if (projectData?.id !== -1 && projectID && token) {

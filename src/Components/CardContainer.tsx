@@ -1,21 +1,12 @@
-import { Grid } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Commit } from '../helpers/types';
 import CommitCard from './CommitCard';
-import { getCommits } from '../helpers/fetches';
 import FilterBar from './FilterBar';
 import { useLogin } from '../Components/ProjectContext';
-import { json } from 'stream/consumers';
 
 
 function CardContainer() {
-    /*
-    const [commits, setCommits] = useState<Commit[] | undefined>([])
 
-    useEffect(() => {
-        getCommits().then(data => setCommits(data))
-    }, [])
-    */
     const [filteredCommits, setFilteredCommits] = useState<Commit[] | undefined>([])
     const projectContext = useLogin();
 

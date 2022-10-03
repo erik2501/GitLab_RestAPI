@@ -74,7 +74,6 @@ export const GetChartData = () => {
         if (projectID && token) {
             getCommits(projectID,token).then(data => setCommits(data));
         }
-        //console.log(authorOccurence);
     }, [projectContext?.project])
     
     return (data)
@@ -82,7 +81,6 @@ export const GetChartData = () => {
 
 
 const renderLabel = (labelRenderProps: LabelRenderProps) => {
-    //var xx = labelRenderProps.dataEntry.title + labelRenderProps.dataEntry.value;
     return labelRenderProps.dataEntry.title;
 }
 

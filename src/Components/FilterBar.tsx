@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLogin } from './ProjectContext';
 import { Commit } from '../helpers/types';
 import { getCommits } from '../helpers/fetches';
-import { Drawer, IconButton, ListItem, ListItemIcon, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Drawer, IconButton, Stack, useMediaQuery, useTheme } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FilterList from '@mui/icons-material/FilterList';
@@ -16,7 +16,7 @@ import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Container } from '@mui/system';
 
-function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : any, setFilteredCommits : any}) {
+function FilterBar({ setFilteredCommits} : {filteredCommits : any, setFilteredCommits : any}) {
 
     const projectContext = useLogin();
     const [commits, setCommits] = useState<Commit[] | undefined>([])
@@ -128,7 +128,6 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
             <FormControl sx={{ width: 130 }}>
                 <InputLabel> Navn </InputLabel>
                 <Select onChange={changeFilterName} value={searchName}>
-                    {/* <MenuItem value=''>None</MenuItem> */}
                     {names?.map((name) => (
                         <MenuItem key={name} value={name}>
                             {name}
