@@ -17,9 +17,9 @@ function IssueFilterBar({filteredIssues , setFilteredIssues} : {filteredIssues :
 
     const projectContext = useLogin();
     const [issues, setIssues] = useState<Issue[] | undefined>([])
-    const [status, setStatus] = useState<string>()
+    const [status, setStatus] = useState<string>('')
     const names = Array.from(new Set(issues?.map(x => x.author.name)))
-    const [searchName, setSearchName] = useState<String | undefined>()
+    const [searchName, setSearchName] = useState<String | undefined>('')
     const [filtered, setFiltered] = useState<Issue[] | undefined>([])
     const theme = useTheme()
     const matches = useMediaQuery(theme.breakpoints.down('sm'))
@@ -55,8 +55,8 @@ function IssueFilterBar({filteredIssues , setFilteredIssues} : {filteredIssues :
     }
 
     const clearFilter = () => {
-        setSearchName(undefined);
-        setStatus(undefined);
+        setSearchName('');
+        setStatus('');
         setFiltered(issues);
         setFilteredIssues(issues);
     }
@@ -85,20 +85,20 @@ function IssueFilterBar({filteredIssues , setFilteredIssues} : {filteredIssues :
              </IconButton>
             <FormControl sx={{ width: 130 }}>
             <InputLabel> Status </InputLabel>
-            <Select onChange={changeStatus}>
-                <MenuItem value='opened'>
+            <Select onChange={changeStatus} value={status}>
+                <MenuItem key='opened' value='opened'>
                 Open
                 </MenuItem>
-                <MenuItem value='closed'>
+                <MenuItem key='closed' value='closed'>
                 Closed
                 </MenuItem>
             </Select>
         </FormControl>
         <FormControl sx={{ width: 130 }}>
             <InputLabel> Navn </InputLabel>
-            <Select onChange={changeFilterName}>
+            <Select onChange={changeFilterName} value={searchName}>
                 {names?.map((name) => (
-                    <MenuItem value={name}>
+                    <MenuItem key={name} value={name}>
                         {name}
                     </MenuItem>
                 ))}
@@ -108,24 +108,25 @@ function IssueFilterBar({filteredIssues , setFilteredIssues} : {filteredIssues :
         <Button variant="contained" onClick={clearFilter} color="error">Clear</Button>
             </Stack>
             </Drawer>
-        </Stack> :
+        </Stack> 
+        :
         <Stack spacing={2} direction='row' sx={{ p: 2 }}>
         <FormControl sx={{ width: 130 }}>
             <InputLabel> Status </InputLabel>
-            <Select onChange={changeStatus}>
-                <MenuItem value='opened'>
+            <Select onChange={changeStatus} value={status}>
+                <MenuItem key='opened' value='opened'>
                 Open
                 </MenuItem>
-                <MenuItem value='closed'>
+                <MenuItem key='closed' value='closed'>
                 Closed
                 </MenuItem>
             </Select>
         </FormControl>
         <FormControl sx={{ width: 130 }}>
             <InputLabel> Navn </InputLabel>
-            <Select onChange={changeFilterName}>
+            <Select onChange={changeFilterName} value={searchName}>
                 {names?.map((name) => (
-                    <MenuItem value={name}>
+                    <MenuItem key={name} value={name}>
                         {name}
                     </MenuItem>
                 ))}
