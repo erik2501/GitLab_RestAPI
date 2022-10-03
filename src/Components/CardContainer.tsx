@@ -5,6 +5,7 @@ import CommitCard from './CommitCard';
 import { getCommits } from '../helpers/fetches';
 import FilterBar from './FilterBar';
 import { useLogin } from '../Components/ProjectContext';
+import { json } from 'stream/consumers';
 
 
 function CardContainer() {
@@ -26,7 +27,7 @@ function CardContainer() {
                 </div>
                 <div className='cardContainer'>
                     {filteredCommits?.map(c => (
-                        <div>
+                        <div key={JSON.stringify(c)}>
                             <CommitCard commit={c} />
                         </div>
                     ))}

@@ -21,9 +21,9 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
     const projectContext = useLogin();
     const [commits, setCommits] = useState<Commit[] | undefined>([])
     const [filtered, setFiltered] = useState<Commit[] | undefined>([])
-    const [searchName, setSearchName] = useState<String | undefined>()
-    const [startDate, setStartDate] = useState<Dayjs | null>()
-    const [endDate, setEndDate] = useState<Dayjs | null>()
+    const [searchName, setSearchName] = useState<string>('');
+    const [startDate, setStartDate] = useState<Dayjs | null>(null)
+    const [endDate, setEndDate] = useState<Dayjs | null>(null)
     const names = Array.from(new Set(commits?.map(x => x.author_name)))
     const [openDrawer, setOpenDrawer] = useState<boolean>(false)
     const theme = useTheme()
@@ -45,9 +45,9 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
 
     //klarer alle filtere
     const clearFilters = () => {
-        setSearchName(undefined);
-        setStartDate(undefined);
-        setEndDate(undefined);
+        setSearchName('');
+        setStartDate(null);
+        setEndDate(null);
         setFilteredCommits(commits);
     }
 
@@ -93,9 +93,9 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
                         </IconButton>
                         <FormControl sx={{ width: 130 }}>
                             <InputLabel> Navn </InputLabel>
-                            <Select onChange={changeFilterName}>
+                            <Select onChange={changeFilterName} value={searchName}>
                                 {names?.map((name) => (
-                                    <MenuItem value={name}>
+                                    <MenuItem key={name} value={name}>
                                         {name}
                                     </MenuItem>
                                 ))}
@@ -127,9 +127,10 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
             <Stack spacing={2} direction='row' sx={{ p: 2 }}>
             <FormControl sx={{ width: 130 }}>
                 <InputLabel> Navn </InputLabel>
-                <Select onChange={changeFilterName}>
+                <Select onChange={changeFilterName} value={searchName}>
+                    {/* <MenuItem value=''>None</MenuItem> */}
                     {names?.map((name) => (
-                        <MenuItem value={name}>
+                        <MenuItem key={name} value={name}>
                             {name}
                         </MenuItem>
                     ))}
