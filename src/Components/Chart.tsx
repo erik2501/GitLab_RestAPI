@@ -66,7 +66,6 @@ export const GetChartData = () => {
             number = 0
         }
     }
-    console.log(data)
 
     useEffect(() => {
         const projectID = projectContext?.project?.projectID;

@@ -6,7 +6,7 @@ import { useLogin } from './ProjectContext';
 
 
 const Login = () => {
-    
+
     const projectContext = useLogin();
     const [projectID, setProjectID] = useState<string>();
     const [token, setToken] = useState<string>();
@@ -20,21 +20,20 @@ const Login = () => {
                 projectID: projectID,
                 token: token
             })
-            if (projectData){
+            if (projectData) {
                 setTeamName(projectData.namespace.name);
                 localStorage.setItem('teamName', projectData.namespace.name);
             }
         } else {
             setMessage('Wrong login info, try again.');
         }
-        console.log(projectData?.namespace.name)
     }, [projectData])
 
     useEffect(() => {
         const lsProjectID = localStorage.getItem('projectID');
         const lsToken = localStorage.getItem('token');
         setTeamName(localStorage.getItem('teamName'));
-        if (lsProjectID && lsToken){
+        if (lsProjectID && lsToken) {
             projectContext?.setProject({
                 projectID: lsProjectID,
                 token: lsToken
@@ -43,11 +42,11 @@ const Login = () => {
             setToken(lsToken);
         }
         setMessage('');
-    },[])
-    
+    }, [])
+
     const logIn = () => {
-        if (projectID && token){
-            getProjectInfo(projectID,token).then(data => setProjectData(data));
+        if (projectID && token) {
+            getProjectInfo(projectID, token).then(data => setProjectData(data));
         } else {
             setMessage('You have to fill in all forms');
         }
@@ -58,28 +57,34 @@ const Login = () => {
         setMessage('');
         setProjectID('');
         setToken('');
-        localStorage.setItem('projectID','');
-        localStorage.setItem('token','');
+        localStorage.setItem('projectID', '');
+        localStorage.setItem('token', '');
     }
-    
+
 
     if (projectContext?.project) {
         return (
             <div className='parentcontainer'>
                 <h1>Welcome to {teamName}!</h1>
-                <Button onClick={logOut} className='loginBtn' variant='contained'>Log out</Button>
+                <Button
+                    onClick={logOut}
+                    className='loginBtn'
+                    variant='contained'
+                    style={{ backgroundColor: '#55828b' }}>
+                    Log out
+                </Button>
             </div>
         )
     }
     else {
         return (
-            <div className='parentcontainer' style={{ paddingTop: '40px' }}>
+            <div className='parentcontainer'>
                 <form className='logincontainer'>
-                    <Card sx={{ width: '100%' }}>
+                    <Card className='loginCard' sx={{ width: '100%', boxShadow: '10' }}>
                         <div className='parentcontainer'>
-                            <CardHeader title="Find your Git-repository" style={{ display: 'flex', justifyText: 'center' }} />
+                            <CardHeader className='cardHeaderLogin' title="Find your Git-repository"  />
                         </div>
-                        <CardContent style={{ display: 'flex', justifyContent: 'center', columnGap: '10px' }}>
+                        <CardContent className='loginTextFields' >
                             <div>
                                 <TextField
                                     id="projectID"
@@ -103,9 +108,10 @@ const Login = () => {
                             <div>
                                 <Button
                                     data-testid='loginBtn'
-                                    style={{ maxWidth: '100%', display: 'flex', justifyContent: 'center' }}
+                                    className='loginBtn'
+                                    // We have used inline styling here because this is a mui button
+                                    style={{ maxWidth: '100%', display: 'flex', justifyContent: 'center', backgroundColor: '#55828b' }}
                                     variant='contained'
-                                    className='loginbtn'
                                     onClick={logIn}>
                                     Find Git-repository
                                 </Button>
@@ -115,7 +121,7 @@ const Login = () => {
                     </Card>
                 </form>
             </div>
-        )   
+        )
     }
 }
 
