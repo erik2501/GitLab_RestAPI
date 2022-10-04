@@ -1,7 +1,8 @@
-import { Drawer, IconButton, ListItem, ListItemIcon, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useLogin } from './ProjectContext';
 import { Commit } from '../helpers/types';
 import { getCommits } from '../helpers/fetches';
+import { Drawer, IconButton, Stack, useMediaQuery, useTheme } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FilterList from '@mui/icons-material/FilterList';
@@ -15,66 +16,60 @@ import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Container } from '@mui/system';
 
-function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : any, setFilteredCommits : any}) {
+function FilterBar({ setFilteredCommits} : {filteredCommits : any, setFilteredCommits : any}) {
 
+    const projectContext = useLogin();
     const [commits, setCommits] = useState<Commit[] | undefined>([])
     const [filtered, setFiltered] = useState<Commit[] | undefined>([])
-    const [searchName, setSearchName] = useState<String | undefined>()
-    const [startDate, setStartDate] = useState<Dayjs | null>()
-    const [endDate, setEndDate] = useState<Dayjs | null>()
+    const [searchName, setSearchName] = useState<string>('');
+    const [startDate, setStartDate] = useState<Dayjs | null>(null)
+    const [endDate, setEndDate] = useState<Dayjs | null>(null)
     const names = Array.from(new Set(commits?.map(x => x.author_name)))
     const [openDrawer, setOpenDrawer] = useState<boolean>(false)
-    const theme = useTheme();
-    const matches = useMediaQuery(theme.breakpoints.down('sm'));
-    //console.log(matches);
+    const theme = useTheme()
+    const matches = useMediaQuery(theme.breakpoints.down('sm'))
 
     useEffect(() => {
-        getCommits().then(data => setCommits(data))
-        getCommits().then(data => setFilteredCommits(data))
-    }, [])
-
-
-    //filtrerer alfabetisk, skal kanskje ikke brukes
-    const filterAlpha = () => {
-        if (commits != undefined) {
-            setFiltered(commits?.sort((a, b) => a.author_name.localeCompare(b.author_name)));
+        const projectID = projectContext?.project?.projectID;
+        const token = projectContext?.project?.token;
+        if (projectID && token) {
+            getCommits(projectID,token).then(data => setCommits(data));
         }
-    }
+    }, [projectContext?.project]) 
+
+    useEffect(() => {
+        setFiltered(commits);
+        setFilteredCommits(commits);
+    },[commits])
+
 
     //klarer alle filtere
     const clearFilters = () => {
-        getCommits().then(data => setFilteredCommits(data))
-        setStartDate(dayjs())
-        setEndDate(dayjs())
-        setSearchName(undefined) //funker ikke, spør stud ass
+        setSearchName('');
+        setStartDate(null);
+        setEndDate(null);
+        setFilteredCommits(commits);
     }
-    
-    //filtrerer på navn
-    const filterName = () => {
-        setFiltered(commits?.filter(x => x.author_name === searchName));
-        //console.log(searchName);
-        //console.log(filtered);
-    }
-    
-    //clear kun liste
-    const clearList = () => {
-        getCommits().then(data => setFiltered(data))
-    }
-    
-    //TODO filtrerer på dato
-    const filterDate = () => {
 
-        if (startDate != null && endDate != null){
-            setFiltered(commits?.filter(a => (dayjs(a.committed_date) > startDate && dayjs(a.committed_date) < endDate)));
-            //console.log(filtered)
+    //filtrerer på valgte parametere
+    const bothFilters = () => {
+        setFiltered(commits)
+        if (searchName) {
+            setFiltered(prevFiltered => prevFiltered?.filter(x => x.author_name === searchName));
+        }
+        if (startDate != null && endDate != null) {
+            setFiltered(prevFiltered => prevFiltered?.filter(a => (dayjs(a.committed_date) > startDate && dayjs(a.committed_date) < endDate)));
         }
     }
 
+    //render de valgte elementene
     const submitFilter = () => {
-        filterName();
-        filterDate();
-        setFilteredCommits(filtered); //fungerer men fortsatt på to forsøk
+        setFilteredCommits(filtered); 
     }
+
+    useEffect(() => {
+        bothFilters();
+    },[startDate, endDate, searchName])
 
     const toggleOpenDrawer = () => setOpenDrawer(!openDrawer)
     const changeFilterName = (e: any) => setSearchName(e.target.value)
@@ -97,10 +92,10 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
                             <ArrowBackIosIcon/>
                         </IconButton>
                         <FormControl sx={{ width: 130 }}>
-                            <InputLabel> Navn </InputLabel>
-                            <Select onChange={changeFilterName}>
+                            <InputLabel> Name </InputLabel>
+                            <Select onChange={changeFilterName} value={searchName}>
                                 {names?.map((name) => (
-                                    <MenuItem value={name}>
+                                    <MenuItem key={name} value={name}>
                                         {name}
                                     </MenuItem>
                                 ))}
@@ -110,14 +105,14 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DesktopDatePicker
                                 label="Start Date"
-                                inputFormat="MM/DD/YYYY"
+                                inputFormat="DD/MM/YYYY"
                                 value={startDate}
                                 onChange={handleChangeStartDate}
                                 renderInput={(params) => <TextField {...params} />}
                             />
                             <DesktopDatePicker
                                 label="End Date"
-                                inputFormat="MM/DD/YYYY"
+                                inputFormat="DD/MM/YYYY"
                                 value={endDate}
                                 onChange={handleChangeEndDate}
                                 renderInput={(params) => <TextField {...params} />}
@@ -131,10 +126,10 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
  :
             <Stack spacing={2} direction='row' sx={{ p: 2 }}>
             <FormControl sx={{ width: 130 }}>
-                <InputLabel> Navn </InputLabel>
-                <Select onChange={changeFilterName}>
+                <InputLabel> Name </InputLabel>
+                <Select onChange={changeFilterName} value={searchName}>
                     {names?.map((name) => (
-                        <MenuItem value={name}>
+                        <MenuItem key={name} value={name}>
                             {name}
                         </MenuItem>
                     ))}
@@ -144,14 +139,14 @@ function FilterBar({filteredCommits , setFilteredCommits} : {filteredCommits : a
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DesktopDatePicker
                     label="Start Date"
-                    inputFormat="MM/DD/YYYY"
+                    inputFormat="DD/MM/YYYY"
                     value={startDate}
                     onChange={handleChangeStartDate}
                     renderInput={(params) => <TextField {...params} />}
                 />
                 <DesktopDatePicker
                     label="End Date"
-                    inputFormat="MM/DD/YYYY"
+                    inputFormat="DD/MM/YYYY"
                     value={endDate}
                     onChange={handleChangeEndDate}
                     renderInput={(params) => <TextField {...params} />}

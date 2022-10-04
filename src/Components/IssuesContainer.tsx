@@ -1,23 +1,36 @@
-import { Issue, User } from '../helpers/types';
-import { getIssues } from '../helpers/fetches';
-import { useEffect, useState } from 'react';
+import { Issue } from '../helpers/types';
+import { useState } from 'react';
 import IssueCard from './IssueCard';
+import IssueFilterBar from './IssueFilterBar';
+import { useLogin } from '../Components/ProjectContext';
 
 const IssuesContainer = () => {
-    const [issues, setIssues] = useState<Issue[] | undefined>([]);
-    const [users, setUsers] = useState<User[]>([]);
 
-    useEffect(() => {
-        getIssues().then(data => setIssues(data));
-    }, [])
+    const projectContext = useLogin();
+    const [filteredIssues, setFilteredIssues] = useState<Issue[] | undefined>([]);
 
-    return (
-        <div className='cardContainer'>
-            {issues?.map((issue) => (
-                <IssueCard key={issue.id} issue={issue} />
-            ))}
-        </div>
-    )
+    if (projectContext?.project) {
+        return(
+            <div>
+                <div className='parentcontainer'>
+                    <IssueFilterBar filteredIssues={filteredIssues} setFilteredIssues={setFilteredIssues}/>
+                </div>
+            <div className='cardContainer'>
+
+                {filteredIssues?.map((issue) => (
+                    <IssueCard key={issue.id} issue={issue} />
+                ))}
+            </div>
+            </div>
+        )
+    }
+    else{
+        return(
+            <div className='centering'>
+                <h1 style={{ marginTop: '50px'}}>You have to log in to view your project's issues.</h1>
+            </div>
+        )
+    }
 }
 
 export default IssuesContainer

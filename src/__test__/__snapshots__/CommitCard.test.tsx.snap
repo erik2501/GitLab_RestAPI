@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders when passed a commit 1`] = `
+<div
+  className="commitCard"
+>
+  <h5>
+    03/05/2021
+  </h5>
+  <h2>
+    title
+  </h2>
+  <h5>
+    com_name
+  </h5>
+</div>
+`;

@@ -7,10 +7,10 @@ export type Commit = {
     message: string;
     author_name: string;
     author_email: string;
-    authored_date: Date;
+    authored_date: string;
     committer_name: string;
     committer_email: string;
-    committed_date: Date;
+    committed_date: string;
     trailers: unknown;
     web_url: string;
 }
@@ -32,26 +32,28 @@ export type User = {
 }
 
 
-// mulig noen av de under som er number burde vaere bigInt ?
 export type Issue = {
     id: number,
     iid: number,
     project_id: number,
     title: string,
-    description: string, // usikker paa denne
+    description: string, 
     state: string,
     created_at: string,
     updated_at: string,
-    closed_at: string, // usikker paa denne
-    closed_by: User,// usikker paa denne
-    labels: string[], // usikker paa denne
-    milestone: string, // usikker paa denne
-    assignees: string[], // usikker paa denne
+    closed_at: string, 
+    closed_by: User,
+    labels: string[], 
+    milestone: string, 
+    assignees: string[], 
     author: Author,
     type: string,
-    assignee: string, // usikker 
+    assignee: string, 
     user_notes_count: number
-    // tar resten hvis det trengs
+}
+
+type Namespace = {
+    name: string
 }
 
 export type Project = {
@@ -59,4 +61,10 @@ export type Project = {
     description: string,
     name: string,
     avatar_url: string //"https://gitlab.stud.idi.ntnu.no/uploads/-/system/project/avatar/17430/pingvin.png"
+    namespace: Namespace
+}
+
+export type LoginInfo = {
+    projectID: string | null,
+    token: string | null
 }

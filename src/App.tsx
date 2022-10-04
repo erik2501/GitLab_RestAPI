@@ -1,8 +1,6 @@
-import CardContainer from './Components/CardContainer';
-import Login from './Components/Login';
-import FilterBar from './Components/FilterBar';
 import { BrowserRouter } from "react-router-dom";
 import RoutesComponent from './pages/RoutesComponent';
+import { ProjectProvider } from './Components/ProjectContext';
 
 function App() {
 
@@ -10,11 +8,10 @@ function App() {
   return (
     <div className='App' >
       <BrowserRouter>
-        <RoutesComponent/>
+        <ProjectProvider>
+          <RoutesComponent/>
+        </ProjectProvider>
       </BrowserRouter>
-      {/* <Login/>
-      <FilterBar/>
-      <CardContainer /> */}
     </div>
   );
 }
