@@ -49,6 +49,6 @@ it('renders when passed an issue', () => {
 
 
 test('should return date in nice format', () => {
-    const { container } = render(<IssueCard issue={dummyIssue} />);
+    render(<IssueCard issue={dummyIssue} />);
     screen.getByText('closed at: 03/05/2021')
 });

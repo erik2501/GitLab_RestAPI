@@ -4,7 +4,7 @@ import { PieChart } from 'react-minimal-pie-chart';
 import { LabelRenderProps } from 'react-minimal-pie-chart/types/Label';
 import { getCommits } from '../helpers/fetches';
 import { Commit } from '../helpers/types';
-import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
+import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 import { useMediaQuery, useTheme } from '@mui/material';
 
 var colors = ['#00876c',

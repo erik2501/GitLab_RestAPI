@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders when passed an issue 1`] = `
+<div
+  className="commitCard"
+>
+  <h5>
+    state: 
+    closed
+  </h5>
+  <h5>
+    closed at: 03/05/2021
+  </h5>
+  <h2>
+    title
+  </h2>
+  <h3>
+    Created by: 
+     
+  </h3>
+  <h3>
+    Closed by: userName
+     
+  </h3>
+</div>
+`;
