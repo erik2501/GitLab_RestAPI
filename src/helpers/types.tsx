@@ -1,5 +1,3 @@
-import { NamedExoticComponent } from "react";
-
 export type Commit = {
     id: string;
     short_id: string;

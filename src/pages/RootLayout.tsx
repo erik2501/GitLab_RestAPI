@@ -1,6 +1,5 @@
 import React from "react"
 import { Outlet } from "react-router-dom";
-
 import Navbar from '../Components/Navbar';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
@@ -13,9 +12,9 @@ const RootLayout = ({ children = <Outlet /> }: RootLayoutProps) => (
 	<>
         <Header/>
 		<Navbar />
-		<main style={{minHeight: '80vh', minWidth: "100%"}}>{children}</main> 
+		<main style={{minHeight: '100vh', minWidth: "100%"}}>{children}</main> 
 		<Footer/>
 	</>
 )
 
-export default RootLayout;// = React.memo(RootLayoutComponent)
+export default RootLayout;
