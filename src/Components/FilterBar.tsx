@@ -92,7 +92,7 @@ function FilterBar({ setFilteredCommits} : {filteredCommits : any, setFilteredCo
                             <ArrowBackIosIcon/>
                         </IconButton>
                         <FormControl sx={{ width: 130 }}>
-                            <InputLabel> Navn </InputLabel>
+                            <InputLabel> Name </InputLabel>
                             <Select onChange={changeFilterName} value={searchName}>
                                 {names?.map((name) => (
                                     <MenuItem key={name} value={name}>
@@ -126,7 +126,7 @@ function FilterBar({ setFilteredCommits} : {filteredCommits : any, setFilteredCo
  :
             <Stack spacing={2} direction='row' sx={{ p: 2 }}>
             <FormControl sx={{ width: 130 }}>
-                <InputLabel> Navn </InputLabel>
+                <InputLabel> Name </InputLabel>
                 <Select onChange={changeFilterName} value={searchName}>
                     {names?.map((name) => (
                         <MenuItem key={name} value={name}>
