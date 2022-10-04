@@ -78,13 +78,13 @@ const Login = () => {
     }
     else {
         return (
-            <div className='parentcontainer' style={{ paddingTop: '40px' }}>
+            <div className='parentcontainer'>
                 <form className='logincontainer'>
-                    <Card sx={{ width: '100%' }}>
+                    <Card className='loginCard' sx={{ width: '100%', boxShadow: '10' }}>
                         <div className='parentcontainer'>
-                            <CardHeader title="Find your Git-repository" style={{ display: 'flex', justifyText: 'center' }} />
+                            <CardHeader className='cardHeaderLogin' title="Find your Git-repository"  />
                         </div>
-                        <CardContent style={{ display: 'flex', justifyContent: 'center', columnGap: '10px' }}>
+                        <CardContent className='loginTextFields' >
                             <div>
                                 <TextField
                                     id="projectID"
@@ -108,9 +108,10 @@ const Login = () => {
                             <div>
                                 <Button
                                     data-testid='loginBtn'
+                                    className='loginBtn'
+                                    // We have used inline styling here because this is a mui button
                                     style={{ maxWidth: '100%', display: 'flex', justifyContent: 'center', backgroundColor: '#55828b' }}
                                     variant='contained'
-                                    //className='loginbtn'
                                     onClick={logIn}>
                                     Find Git-repository
                                 </Button>
