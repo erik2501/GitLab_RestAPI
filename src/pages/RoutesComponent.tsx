@@ -1,6 +1,4 @@
-import React from "react"
-import { Routes as ReactRouterRoutes, Route } from "react-router-dom"
-
+import { Routes as ReactRouterRoutes, Route } from "react-router-dom";
 import RootLayout from "./RootLayout";
 import Login from "../Components/Login";
 import CardContainer from "../Components/CardContainer";

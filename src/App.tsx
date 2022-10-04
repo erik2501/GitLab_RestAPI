@@ -1,7 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
 import RoutesComponent from './pages/RoutesComponent';
 import { ProjectProvider } from './Components/ProjectContext';
-import { useEffect } from "react";
 
 function App() {
 

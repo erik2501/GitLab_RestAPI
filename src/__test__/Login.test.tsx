@@ -1,6 +1,6 @@
 import Login from "../Components/Login";
 import renderer from 'react-test-renderer'
-import { fireEvent, getByRole, getByTestId, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 
 it('when run the login renders', () => {

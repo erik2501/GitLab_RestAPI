@@ -29,6 +29,6 @@ it('renders when passed a commit', () => {
 
 
 test('should return date in nice format', () => {
-    const { container } = render(<CommitCard commit={dummyCommit} />);
+    render(<CommitCard commit={dummyCommit} />);
     screen.getByText('03/05/2021')
 });

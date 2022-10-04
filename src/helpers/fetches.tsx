@@ -33,8 +33,6 @@ export async function getCommits(ID: string, token: string) {
 
     if (response.ok) {
         return await response.json() as Commit[];
-    } else {
-        console.log('Something went wrong. Could not fetch Commits.')
     }
 }
 
@@ -48,7 +46,5 @@ export async function getIssues(ID: string, token: string) {
     })
     if (response.ok) {
         return await response.json() as Issue[];
-    } else {
-        console.log('Something went wrong. Could not fetch Issues')
     }
 }

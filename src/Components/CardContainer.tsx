@@ -4,7 +4,6 @@ import CommitCard from './CommitCard';
 import FilterBar from './FilterBar';
 import { useLogin } from '../Components/ProjectContext';
 
-
 function CardContainer() {
 
     const [filteredCommits, setFilteredCommits] = useState<Commit[] | undefined>([])

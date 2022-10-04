@@ -7,8 +7,6 @@ const Navbar = () => {
         nav('/' + url)
     } 
 
-
-
     return (
         <div className='navbarContainer'>
             <button id={'groupmanagerBtn'} className='button-15' onClick={() => updateNav('')}> Group manager</button>
