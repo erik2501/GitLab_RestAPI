@@ -102,7 +102,7 @@ function IssueFilterBar({ setFilteredIssues} : {filteredIssues : any, setFiltere
             </Select>
         </FormControl>
         <FormControl sx={{ width: 130 }}>
-            <InputLabel> Navn </InputLabel>
+            <InputLabel> Created by </InputLabel>
             <Select onChange={changeFilterName} value={searchName}>
                 {names?.map((name) => (
                     <MenuItem key={name} value={name}>
@@ -130,7 +130,7 @@ function IssueFilterBar({ setFilteredIssues} : {filteredIssues : any, setFiltere
             </Select>
         </FormControl>
         <FormControl sx={{ width: 130 }}>
-            <InputLabel> Navn </InputLabel>
+            <InputLabel> Created by </InputLabel>
             <Select onChange={changeFilterName} value={searchName}>
                 {names?.map((name) => (
                     <MenuItem key={name} value={name}>
